@@ -9,6 +9,9 @@ app.use('/clientes', require('./routes/clientes'));
 app.use('/vendedores', require('./routes/vendedores'));
 app.use('/produtos', require('./routes/produtos'));
 app.use('/vendas', require('./routes/vendas'));
+app.use('/vendas', require('./routes/relatorio.js'));
+
+
 
 //Inicia o Servidor
 app.listen(port, () => {

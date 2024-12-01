@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Simulando um banco de dados com um array
 let vendedores = [
     { id: 1, nome: 'João', salario: 2500 },
     { id: 2, nome: 'Maria', salario: 3000 },

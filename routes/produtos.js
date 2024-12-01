@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Simulando um banco de dados com um array
 let produtos = [
-    { id: 1, nome: 'Placa-mãe', preco: 350 },
-    { id: 2, nome: 'Memória RAM', preco: 200 },
-    { id: 3, nome: 'Processador', preco: 1200 },
+    { id: 1, nome: 'Placa-mãe', preco: 350, estoque: 10 },
+    { id: 2, nome: 'Memória RAM', preco: 200, estoque: 5 },
+    { id: 3, nome: 'Processador', preco: 1200, estoque: 2 },
 ];
 
 // Rota para listar todos os produtos
@@ -15,9 +14,8 @@ router.get('/', (req, res) => {
 
 // Rota para adicionar um novo produto
 router.post('/', (req, res) => {
-    const { nome, preco } = req.body;
-    const id = produtos.length + 1;
-    const novoProduto = { id, nome, preco };
+    const { nome, preco, estoque } = req.body;
+    const novoProduto = { id: produtos.length + 1, nome, preco, estoque };
     produtos.push(novoProduto);
     res.status(201).json(novoProduto);
 });
@@ -25,7 +23,7 @@ router.post('/', (req, res) => {
 // Rota para atualizar um produto
 router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const { nome, preco } = req.body;
+    const { nome, preco, estoque } = req.body;
     let produto = produtos.find(p => p.id == id);
 
     if (!produto) {
@@ -34,14 +32,14 @@ router.put('/:id', (req, res) => {
 
     produto.nome = nome;
     produto.preco = preco;
+    produto.estoque = estoque;
     res.json(produto);
 });
 
-// Rota para excluir um produto
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-    produtos = produtos.filter(p => p.id != id);
-    res.status(204).send();
+// Rota para gerar relatório de produtos com baixo estoque
+router.get('/relatorio/baixo-estoque', (req, res) => {
+    const baixoEstoque = produtos.filter(p => p.estoque < 5);
+    res.json(baixoEstoque);
 });
 
 module.exports = router;

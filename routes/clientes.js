@@ -26,13 +26,30 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Buscar um Cliente específico
+router.get('/:id', async (req, res) => {
+    const { id } = req.params; // Pega o ID do cliente na URL
+    try {
+        const [rows] = await db.query('SELECT * FROM clientes WHERE id = ?', [id]);
+        if (rows.length === 0) {
+            // Caso nenhum cliente seja encontrado
+            res.status(404).json({ message: 'Cliente não encontrado' });
+        } else {
+            res.json(rows[0]); // Retorna apenas o cliente encontrado
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 //Atualizar Clientes
 router.put('/:id', async(req, res) => {
     const { id } = req.params;
     const { nome, email, telefone, endereco} = req.body;
     try {
         await db.query(
-            'UPDATE cliente SET nome = ?, email = ?, telefone = ?, endereco = ? WHERE id = ?',
+            'UPDATE clientes SET nome = ?, email = ?, telefone = ?, endereco = ? WHERE id = ?',
             [nome, email, telefone, endereco, id]
         );
         res.json({ message: 'Cliente atualizado com sucesso!' });

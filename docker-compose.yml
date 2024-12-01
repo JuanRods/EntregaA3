@@ -13,7 +13,7 @@ services:
       DB_HOST: db
       DB_USER: root
       DB_PASSWORD: root
-      DB_DATABASE: loja_pecas
+      DB_DATABASE: loja_computadores
       DB_PORT: 3307
     depends_on:
       - db
@@ -24,11 +24,12 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: loja_pecas
+      MYSQL_DATABASE: loja_computadores
     ports:
-      - "3307:3306" # Alterando para 3307 na máquina host
+      - "3307:3306" # Alterando para 3306 na máquina host
     volumes:
       - db_data:/var/lib/mysql
+      - ./init-db-scripts:/docker-entrypoint-initdb.d  # Scripts de inicialização
 
 volumes:
   db_data:

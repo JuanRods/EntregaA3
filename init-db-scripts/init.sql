@@ -14,8 +14,10 @@ CREATE TABLE IF NOT EXISTS vendedores (
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     telefone VARCHAR(20),
+    endereco VARCHAR(255),  -- Novo campo endereco
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 -- Criação da tabela clientes
 CREATE TABLE IF NOT EXISTS clientes (
@@ -23,8 +25,10 @@ CREATE TABLE IF NOT EXISTS clientes (
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     telefone VARCHAR(20),
+    endereco VARCHAR(255),  -- Novo campo endereco
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 -- Criação da tabela vendas
 CREATE TABLE IF NOT EXISTS vendas (

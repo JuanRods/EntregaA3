@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./codigo-fonte  # Mudando para o diretório correto
+    container_name: loja-pecas-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./codigo-fonte:/app  # Mudando para o diretório correto
+      - /app/node_modules
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_DATABASE: loja_computadores
+      DB_PORT: 3306
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    container_name: loja-pecas-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: loja_computadores
+    ports:
+      - "3307:3306" # Alterando para 3306 na máquina host
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./codigo-fonte/init-db-scripts:/docker-entrypoint-initdb.d  # Ajuste aqui
+
+volumes:
+  db_data:

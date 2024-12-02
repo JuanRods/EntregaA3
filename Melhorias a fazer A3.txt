@@ -1,0 +1,9 @@
+Melhorias a fazer A3
+
+Ajustar a venda,
+
+Adicionar salário ao INSERT de vendedores
+
+Fazer os relatório estático rodar em outra porta
+
+Mudar a arquitetura (Opcional)

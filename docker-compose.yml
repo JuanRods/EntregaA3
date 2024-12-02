@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   app:
     build:
@@ -30,6 +29,21 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./codigo-fonte/init-db-scripts:/docker-entrypoint-initdb.d  # Ajuste aqui
+
+  relatorios:
+    build:
+      context: ./relatorios
+    container_name: relatorios-service
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_DATABASE: loja_computadores
+      DB_PORT: 3306
+    depends_on:
+      - db
 
 volumes:
   db_data:

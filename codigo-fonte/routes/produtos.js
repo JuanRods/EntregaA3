@@ -51,14 +51,26 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Rota para gerar relatório de produtos com baixo estoque
-router.get('/relatorio/baixo-estoque', async (req, res) => {
+// Rota para deletar um produto
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;  // Recebe o ID do produto a ser deletado
+
     try {
-        const [rows] = await db.query('SELECT * FROM produtos WHERE estoque < 5');
-        res.json(rows);
+        // Verificar se o produto existe
+        const [produto] = await db.query('SELECT * FROM produtos WHERE id = ?', [id]);
+
+        if (produto.length === 0) {
+            return res.status(404).json({ message: 'Produto não encontrado' });
+        }
+
+        // Deletar o produto
+        await db.query('DELETE FROM produtos WHERE id = ?', [id]);
+
+        res.json({ message: 'Produto deletado com sucesso!' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 module.exports = router;

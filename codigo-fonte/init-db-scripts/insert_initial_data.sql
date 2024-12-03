@@ -31,10 +31,16 @@ INSERT INTO clientes (nome, email, telefone, endereco) VALUES
     ('Roberto Ferreira', 'roberto@gmail.com', '9999999999', 'Rua I, 606'),
     ('Fernanda Alves', 'fernanda@gmail.com', '1010101010', 'Rua J, 707');
 
--- Inserir dados na tabela vendas
-INSERT INTO vendas (produto_id, vendedor_id, cliente_id, quantidade, total) VALUES
-    (1, 2, 1, 3, 299.99),   -- Venda de 3 unidades do produto 1, realizada pelo vendedor 2 para o cliente 1, com total de R$ 299,99
-    (2, 3, 2, 2, 129.90),   -- Venda de 2 unidades do produto 2, realizada pelo vendedor 3 para o cliente 2, com total de R$ 129,90
-    (3, 1, 3, 1, 79.50),    -- Venda de 1 unidade do produto 3, realizada pelo vendedor 1 para o cliente 3, com total de R$ 79,50
-    (4, 4, 4, 5, 399.00),   -- Venda de 5 unidades do produto 4, realizada pelo vendedor 4 para o cliente 4, com total de R$ 399,00
-    (5, 5, 5, 10, 999.90);  -- Venda de 10 unidades do produto 5, realizada pelo vendedor 5 para o cliente 5, com total de R$ 999,90
+INSERT INTO pedidos (data_pedido, status) VALUES 
+('2024-12-01 10:00:00', 'pendente'),
+('2024-12-01 11:30:00', 'finalizado'),
+('2024-12-01 12:45:00', 'cancelado');
+
+
+INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario) VALUES 
+(1, 1, 2, 100.00),  -- Pedido 1, Teclado, 2 unidades a R$100.00 cada
+(1, 2, 1, 50.00),   -- Pedido 1, Mouse, 1 unidade a R$50.00
+(2, 3, 5, 700.00),  -- Pedido 2, Monitor, 5 unidades a R$700.00 cada
+(2, 6, 3, 300.00),  -- Pedido 2, Memória RAM 8GB, 3 unidades a R$300.00 cada
+(3, 7, 2, 400.00),  -- Pedido 3, SSD 512GB, 2 unidades a R$400.00
+(3, 8, 4, 200.00);  -- Pedido 3, Fonte 500W, 4 unidades a R$200.00 cada

@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');
 
 //Criar Cliente
-router.post('/', async (req,res) => {
+router.post('/add', async (req,res) => {
     const { nome, email, telefone, endereco } = req.body;
     try {
         const [result] = await db.query(
@@ -17,7 +17,7 @@ router.post('/', async (req,res) => {
 });
 
 //Listar Clientes
-router.get('/', async (req, res) => {
+router.get('/listar', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM clientes');
         res.json(rows);
@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 });
 
 // Buscar um Cliente específico
-router.get('/:id', async (req, res) => {
+router.get('/busca/:id', async (req, res) => {
     const { id } = req.params; // Pega o ID do cliente na URL
     try {
         const [rows] = await db.query('SELECT * FROM clientes WHERE id = ?', [id]);
@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
 
 
 //Atualizar Clientes
-router.put('/:id', async(req, res) => {
+router.put('/att/:id', async(req, res) => {
     const { id } = req.params;
     const { nome, email, telefone, endereco} = req.body;
     try {
@@ -59,7 +59,7 @@ router.put('/:id', async(req, res) => {
 });
 
 //Deletar Clientes
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await db.query('DELETE FROM clientes WHERE id = ?', [id]);

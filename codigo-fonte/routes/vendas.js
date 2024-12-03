@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');  
 
 
-router.get('/', async (req, res) => {
+router.get('/listar', async (req, res) => {
     try {
         const [pedidos] = await db.query('SELECT * FROM pedidos');
         res.json(pedidos);
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/buscar/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -86,7 +86,7 @@ router.post('/inserir', async (req, res) => {
 });
 
 
-router.put('/:id/concluir', async (req, res) => {
+router.put('/concluir/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -115,7 +115,7 @@ router.put('/:id/concluir', async (req, res) => {
 });
 
 // Rota para cancelar um pedido
-router.delete('/:id/cancelar', async (req, res) => {
+router.delete('/cancelar/:id', async (req, res) => {
     const { id } = req.params;
 
     try {

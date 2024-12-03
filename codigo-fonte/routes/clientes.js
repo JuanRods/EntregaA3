@@ -27,7 +27,7 @@ router.get('/listar', async (req, res) => {
 });
 
 // Buscar um Cliente específico
-router.get('/busca/:id', async (req, res) => {
+router.get('/buscar/:id', async (req, res) => {
     const { id } = req.params; // Pega o ID do cliente na URL
     try {
         const [rows] = await db.query('SELECT * FROM clientes WHERE id = ?', [id]);

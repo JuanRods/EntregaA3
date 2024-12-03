@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');  // A instância do banco de dados
 
 // Rota para listar todos os produtos
-router.get('/', async (req, res) => {
+router.get('/listar', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM produtos');
         res.json(rows);
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 // Rota para adicionar um novo produto
-router.post('/', async (req, res) => {
+router.post('/inserir', async (req, res) => {
     const { nome, preco, estoque } = req.body;
     try {
         const [result] = await db.query(
@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
 });
 
 // Rota para atualizar um produto
-router.put('/:id', async (req, res) => {
+router.put('/att/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, preco, estoque } = req.body;
     try {
@@ -52,7 +52,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Rota para deletar um produto
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params;  // Recebe o ID do produto a ser deletado
 
     try {

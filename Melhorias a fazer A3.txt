@@ -1,9 +1,10 @@
 Melhorias a fazer A3
 
-Ajustar a venda,
+Ajustar a venda, (Feito)
 
-Adicionar salário ao INSERT de vendedores
+Adicionar salário ao INSERT de vendedores (Feito)
 
-Fazer os relatório estático rodar em outra porta
+Fazer os relatório estático rodar em outra porta (A Fazer/faltam 3 rotas)
 
-Mudar a arquitetura (Opcional)
+Refinar a estrutura (A Fazer)
+--

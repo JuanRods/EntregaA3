@@ -1,6 +1,4 @@
--- insert_initial_data.sql
 
--- Inserir dados iniciais de produtos
 INSERT INTO produtos (nome, preco, estoque) VALUES
     ('Teclado', 100.00, 50),
     ('Mouse', 50.00, 100),
@@ -13,12 +11,11 @@ INSERT INTO produtos (nome, preco, estoque) VALUES
     ('Gabinete', 250.00, 10),
     ('Cooler', 80.00, 40);
 
--- Inserir dados iniciais de vendedores
-INSERT INTO vendedores (nome, email) VALUES
-    ('Vendedor 1', 'vendedor1@gmail.com'),
-    ('Vendedor 2', 'vendedor2@gmail.com');
+INSERT INTO vendedores (nome, email, salario) VALUES
+('João', 'joao@email.com', 2500.00),
+('Maria', 'maria@email.com', 3000.00);
 
--- Inserir dados iniciais de clientes
+
 INSERT INTO clientes (nome, email, telefone, endereco) VALUES
     ('JJJ', 'joao@gmail.com', '1111111111', 'Rua A, 123'),
     ('Maria Souza', 'maria@gmail.com', '2222222222', 'Rua B, 456'),
@@ -38,9 +35,9 @@ INSERT INTO pedidos (data_pedido, status) VALUES
 
 
 INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario) VALUES 
-(1, 1, 2, 100.00),  -- Pedido 1, Teclado, 2 unidades a R$100.00 cada
-(1, 2, 1, 50.00),   -- Pedido 1, Mouse, 1 unidade a R$50.00
-(2, 3, 5, 700.00),  -- Pedido 2, Monitor, 5 unidades a R$700.00 cada
-(2, 6, 3, 300.00),  -- Pedido 2, Memória RAM 8GB, 3 unidades a R$300.00 cada
-(3, 7, 2, 400.00),  -- Pedido 3, SSD 512GB, 2 unidades a R$400.00
-(3, 8, 4, 200.00);  -- Pedido 3, Fonte 500W, 4 unidades a R$200.00 cada
+(1, 1, 2, 100.00),  
+(1, 2, 1, 50.00),   
+(2, 3, 5, 700.00), 
+(2, 6, 3, 300.00), 
+(3, 7, 2, 400.00), 
+(3, 8, 4, 200.00);

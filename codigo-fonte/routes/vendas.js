@@ -16,14 +16,15 @@ router.get('/buscar/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-     
         const [pedido] = await db.query('SELECT * FROM pedidos WHERE id = ?', [id]);
 
         if (pedido.length === 0) {
             return res.status(404).json({ message: 'Pedido não encontrado.' });
         }
 
-       
+        // Buscar o cliente associado ao pedido
+        const [cliente] = await db.query('SELECT * FROM clientes WHERE id = ?', [pedido[0].cliente_id]);
+
         const [itens] = await db.query(
             `SELECT i.produto_id, p.nome AS produto_nome, i.quantidade, i.preco_unitario 
              FROM itens_pedido i
@@ -34,6 +35,7 @@ router.get('/buscar/:id', async (req, res) => {
 
         res.json({
             pedido: pedido[0], 
+            cliente: cliente[0],  // Retornar informações do cliente
             itens: itens       
         });
     } catch (err) {
@@ -43,21 +45,25 @@ router.get('/buscar/:id', async (req, res) => {
 
 
 router.post('/inserir', async (req, res) => {
-    const { itens } = req.body;  
+    const { cliente_id, itens } = req.body;  // Agora estamos esperando o cliente_id
 
     try {
-       
+        // Verificar se o cliente existe
+        const [cliente] = await db.query('SELECT * FROM clientes WHERE id = ?', [cliente_id]);
+        if (cliente.length === 0) {
+            return res.status(404).json({ message: 'Cliente não encontrado' });
+        }
+
         await db.query('START TRANSACTION');
 
-       
-        const [resultPedido] = await db.query('INSERT INTO pedidos (status) VALUES (?)', ['pendente']);
+        // Inserir o pedido com cliente associado
+        const [resultPedido] = await db.query('INSERT INTO pedidos (cliente_id, status) VALUES (?, ?)', [cliente_id, 'pendente']);
         const pedidoId = resultPedido.insertId;
 
-        
+        // Processar os itens do pedido
         for (const item of itens) {
             const { produto_id, quantidade } = item;
 
-           
             const [produto] = await db.query('SELECT estoque, preco FROM produtos WHERE id = ?', [produto_id]);
             if (produto.length === 0) {
                 return res.status(404).json({ message: 'Produto não encontrado' });
@@ -67,23 +73,20 @@ router.post('/inserir', async (req, res) => {
                 return res.status(400).json({ message: `Estoque insuficiente para o produto ${produto_id}` });
             }
 
-            
             await db.query('INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)', 
                 [pedidoId, produto_id, quantidade, produto[0].preco]);
 
-            
             await db.query('UPDATE produtos SET estoque = estoque - ? WHERE id = ?', [quantidade, produto_id]);
         }
 
-        
         await db.query('COMMIT');
         res.status(201).json({ message: 'Pedido criado com sucesso!', pedidoId });
     } catch (err) {
-        
         await db.query('ROLLBACK');
         res.status(500).json({ error: err.message });
     }
 });
+
 
 
 router.put('/concluir/:id', async (req, res) => {

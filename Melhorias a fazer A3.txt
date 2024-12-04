@@ -1,0 +1,12 @@
+Melhorias a fazer A3
+
+Ajustar a venda, (Feito)
+
+Adicionar salário ao INSERT de vendedores (Feito)
+
+Fazer os relatório estático rodar em outra porta (A Fazer/faltam 3 rotas)
+
+Refinar a estrutura (A Fazer)
+--- Fazer mensagens de tratamento de erro em todas as rotas
+--- Tentar configurar os localhost:3000 e 4000
+--- Avaliar se é preciso modificar as variaveis.

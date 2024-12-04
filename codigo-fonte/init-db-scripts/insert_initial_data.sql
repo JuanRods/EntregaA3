@@ -5,10 +5,10 @@ INSERT INTO produtos (nome, preco, estoque) VALUES
     ('Monitor', 700.00, 20),
     ('Placa de Vídeo', 1500.00, 15),
     ('Processador', 1200.00, 10),
-    ('Memória RAM 8GB', 300.00, 25),
-    ('SSD 512GB', 400.00, 30),
+    ('Memória RAM 8GB', 300.00, 2),
+    ('SSD 512GB', 400.00, 3),
     ('Fonte 500W', 200.00, 20),
-    ('Gabinete', 250.00, 10),
+    ('Gabinete', 250.00, 9),
     ('Cooler', 80.00, 40);
 
 INSERT INTO vendedores (nome, email, salario) VALUES
@@ -28,10 +28,11 @@ INSERT INTO clientes (nome, email, telefone, endereco) VALUES
     ('Roberto Ferreira', 'roberto@gmail.com', '9999999999', 'Rua I, 606'),
     ('Fernanda Alves', 'fernanda@gmail.com', '1010101010', 'Rua J, 707');
 
-INSERT INTO pedidos (data_pedido, status) VALUES 
-('2024-12-01 10:00:00', 'pendente'),
-('2024-12-01 11:30:00', 'finalizado'),
-('2024-12-01 12:45:00', 'cancelado');
+INSERT INTO pedidos (cliente_id, data_pedido, status) VALUES 
+(1, '2024-12-01 10:00:00', 'pendente'),
+(2, '2024-12-01 11:30:00', 'finalizado'),
+(3, '2024-12-01 12:45:00', 'cancelado');
+
 
 
 INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario) VALUES 

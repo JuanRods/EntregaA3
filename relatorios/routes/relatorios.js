@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db'); // A instância do banco de dados
+const db = require('../config/db');
 
-// Rota para gerar relatório de vendas
-router.get('/', async (req, res) => {
+router.get('/relatorio', async (req, res) => {
     try {
-        // Consultar vendas totais por produto
         const [result] = await db.query(
             `SELECT 
                 p.id AS produto_id, 
@@ -21,7 +19,6 @@ router.get('/', async (req, res) => {
             return res.status(404).json({ message: 'Nenhum dado de venda encontrado.' });
         }
 
-        // Determinar os produtos mais e menos vendidos
         const maisVendido = result[0];
         const menosVendido = result[result.length - 1];
 
@@ -39,6 +36,78 @@ router.get('/', async (req, res) => {
             },
             detalhamento: result
         });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/relatorio/produtos-por-cliente', async (req, res) => {
+    try {
+        const [result] = await db.query(
+            `SELECT 
+                c.id AS cliente_id, 
+                c.nome AS cliente_nome, 
+                p.nome AS produto_nome, 
+                SUM(i.quantidade) AS quantidade_comprada
+             FROM itens_pedido i
+             JOIN pedidos o ON i.pedido_id = o.id
+             JOIN clientes c ON o.cliente_id = c.id
+             JOIN produtos p ON i.produto_id = p.id
+             GROUP BY c.id, p.id
+             ORDER BY c.id, quantidade_comprada DESC`
+        );
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Nenhum dado de consumo encontrado.' });
+        }
+
+        res.json({ detalhamento: result });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/relatorio/consumo-medio', async (req, res) => {
+    try {
+        const [result] = await db.query(
+            `SELECT 
+                c.id AS cliente_id, 
+                c.nome AS cliente_nome, 
+                AVG(i.quantidade * i.preco_unitario) AS consumo_medio
+             FROM itens_pedido i
+             JOIN pedidos o ON i.pedido_id = o.id
+             JOIN clientes c ON o.cliente_id = c.id
+             GROUP BY c.id
+             ORDER BY consumo_medio DESC`
+        );
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Nenhum dado de consumo médio encontrado.' });
+        }
+
+        res.json({ detalhamento: result });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/relatorio/baixo-estoque', async (req, res) => {
+    try {
+        const [result] = await db.query(
+            `SELECT 
+                id AS produto_id, 
+                nome AS produto_nome, 
+                estoque
+             FROM produtos
+             WHERE estoque < 10
+             ORDER BY estoque ASC`
+        );
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Nenhum produto com baixo estoque encontrado.' });
+        }
+
+        res.json({ detalhamento: result });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

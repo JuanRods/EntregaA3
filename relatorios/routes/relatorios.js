@@ -3,7 +3,9 @@ const router = express.Router();
 const db = require('../config/db');
 
 router.get('/relatorio', async (req, res) => {
+
     try {
+
         const [result] = await db.query(
             `SELECT 
                 p.id AS produto_id, 
@@ -20,6 +22,7 @@ router.get('/relatorio', async (req, res) => {
         }
 
         const maisVendido = result[0];
+
         const menosVendido = result[result.length - 1];
 
         res.json({
@@ -36,13 +39,16 @@ router.get('/relatorio', async (req, res) => {
             },
             detalhamento: result
         });
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
 router.get('/relatorio/produtos-por-cliente', async (req, res) => {
+
     try {
+
         const [result] = await db.query(
             `SELECT 
                 c.id AS cliente_id, 
@@ -62,13 +68,16 @@ router.get('/relatorio/produtos-por-cliente', async (req, res) => {
         }
 
         res.json({ detalhamento: result });
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
 router.get('/relatorio/consumo-medio', async (req, res) => {
+
     try {
+
         const [result] = await db.query(
             `SELECT 
                 c.id AS cliente_id, 
@@ -86,13 +95,16 @@ router.get('/relatorio/consumo-medio', async (req, res) => {
         }
 
         res.json({ detalhamento: result });
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
 router.get('/relatorio/baixo-estoque', async (req, res) => {
+
     try {
+
         const [result] = await db.query(
             `SELECT 
                 id AS produto_id, 
@@ -108,6 +120,7 @@ router.get('/relatorio/baixo-estoque', async (req, res) => {
         }
 
         res.json({ detalhamento: result });
+        
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

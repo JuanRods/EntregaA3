@@ -10,3 +10,9 @@ Refinar a estrutura (A Fazer)
 --- Fazer mensagens de tratamento de erro em todas as rotas
 --- Tentar configurar os localhost:3000 e 4000
 --- Avaliar se é preciso modificar as variaveis.
+--- Fazer a verificação se todas entidades já existem
+--- Adicionar Busca especifica a produtos
+--- Customizar as rotas no postman
+--- Ser criativo
+--- Adicionar regras de negocio
+--- Mudar o nome dos itens que estão falando loja peças.

@@ -1,12 +1,12 @@
 services:
   app:
     build:
-      context: ./codigo-fonte
-    container_name: wordnet-app
+      context: ./api
+    container_name: loja_computadores-app
     ports:
       - "3000:3000"
     volumes:
-      - ./codigo-fonte:/app
+      - ./api:/app
       - /app/node_modules
     environment:
       DB_HOST: db
@@ -19,7 +19,7 @@ services:
 
   db:
     image: mysql:8
-    container_name: wordnet-db
+    container_name: loja_computadores-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -28,7 +28,7 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./codigo-fonte/init-db-scripts:/docker-entrypoint-initdb.d
+      - ./api/init-db-scripts:/docker-entrypoint-initdb.d
 
   relatorios:
     build:

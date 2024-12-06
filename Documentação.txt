@@ -6,9 +6,7 @@ Esta aplicação é uma solução distribuída baseada em micro-serviços, desen
 
 Para iniciar a aplicação por gentileza use o comando: docker-compose up --build -d Para construir as imagens corretamente. 
 
-( "--build" Garante que as imagens sejam construídas corretamente)
-
-( "-d" Permite que você continue navegando no terminal mesmo após iniciar a aplicação)
+( "--build" Garante que as imagens sejam construídas corretamente) e ( "-d" Permite que você continue navegando no terminal mesmo após iniciar a aplicação)
 
 Para encerrar a aplicação por gentileza use o comando: docker-compose down --volumes --remove-orphans Para encerrar e limpar os containers e volumes associados ao código, mantendo a aplicação limpa. 
 
@@ -24,7 +22,12 @@ Esse atraso ocorre devido ao processo de inicialização completa dos serviços 
 
 Segue testes apropriados para que possam ser feitos no postman.
 
+Junto com um aquivo chamado Rotas A3  anexado ao projeto que tem as rotas já cadastradas.
+
 Os metodos a serem usados são: GET, POST, PUT e DELETE
+
+
+
 
 Primeiro Teste:
 

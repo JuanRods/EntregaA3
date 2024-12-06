@@ -1,8 +1,8 @@
-#### DESCRIÇÃO GERAL
+###  DESCRIÇÃO GERAL
 Esta aplicação é uma solução distribuída baseada em micro-serviços, desenvolvida para o gerenciamento produtos, vendas, clientes e relatórios. Foi estruturada utilizando as tecnologias Node.js, MySQL, Docker, e Docker Compose. Buscamos neste trabalho seguir praticas boas para a composição do código e sua estrutura como um todo.
 
 
-#### INICIAR A APLICAÇÃO
+###  INICIAR A APLICAÇÃO
 
 Para iniciar a aplicação por gentileza use o comando: docker-compose up --build -d Para construir as imagens corretamente. 
 

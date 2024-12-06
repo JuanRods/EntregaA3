@@ -42,6 +42,30 @@ router.post('/inserir', async (req, res) => {
     }
 });
 
+// Busca um Produto específico
+router.get('/buscar/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        
+        const [rows] = await db.query('SELECT * FROM produtos WHERE id = ?', [id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                message: 'Produto não encontrado.'
+            });
+        }
+        res.json({
+            message: 'Produto encontrado com sucesso!',
+            produto: rows[0]
+        });
+    } catch (err) {
+        res.status(500).json({
+            error: 'Erro ao buscar o produto. Detalhes: ' + err.message
+        });
+    }
+});
+
 // Atualiza um produto
 router.put('/att/:id', async (req, res) => {
     const { id } = req.params;

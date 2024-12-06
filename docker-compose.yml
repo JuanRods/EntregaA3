@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: ./codigo-fonte
-    container_name: loja-pecas-app
+    container_name: wordnet-app
     ports:
       - "3000:3000"
     volumes:
@@ -19,7 +19,7 @@ services:
 
   db:
     image: mysql:8
-    container_name: loja-pecas-db
+    container_name: wordnet-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root

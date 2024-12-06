@@ -11,25 +11,25 @@ INSERT INTO produtos (nome, preco, estoque) VALUES
 ('Cooler', 80.00, 40);
 
 INSERT INTO vendedores (nome, email, salario) VALUES 
-('João', 'joao@email.com', 2500.00),
+('Jota', 'jota@email.com', 2500.00),
 ('Maria', 'maria@email.com', 3000.00);
 
 INSERT INTO clientes (nome, email, telefone, endereco)VALUES 
     (
-        'JJJ',
-        'joao@gmail.com',
+        'Marcio',
+        'marcio@gmail.com',
         '1111111111',
         'Rua A, 123'
     ),
     (
-        'Maria Souza',
-        'maria@gmail.com',
+        'Alana Souza',
+        'alana@gmail.com',
         '2222222222',
         'Rua B, 456'
     ),
     (
-        'Carlos Lima',
-        'carlos@gmail.com',
+        'Orlando Lima',
+        'orlando@gmail.com',
         '3333333333',
         'Rua C, 789'
     ),

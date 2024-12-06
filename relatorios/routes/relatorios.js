@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 
-router.get('/relatorio', async (req, res) => {
+router.get('/produto-mais-vendido', async (req, res) => {
 
     try {
 
@@ -45,7 +45,7 @@ router.get('/relatorio', async (req, res) => {
     }
 });
 
-router.get('/relatorio/produtos-por-cliente', async (req, res) => {
+router.get('/produtos-por-cliente', async (req, res) => {
 
     try {
 
@@ -74,7 +74,7 @@ router.get('/relatorio/produtos-por-cliente', async (req, res) => {
     }
 });
 
-router.get('/relatorio/consumo-medio', async (req, res) => {
+router.get('/consumo-medio', async (req, res) => {
 
     try {
 
@@ -101,7 +101,7 @@ router.get('/relatorio/consumo-medio', async (req, res) => {
     }
 });
 
-router.get('/relatorio/baixo-estoque', async (req, res) => {
+router.get('/baixo-estoque', async (req, res) => {
 
     try {
 

@@ -31,7 +31,7 @@ CREATE TABLE pedidos (
     cliente_id INT,
     status VARCHAR(20),
     data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE itens_pedido (

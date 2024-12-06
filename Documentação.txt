@@ -1,0 +1,869 @@
+#### DESCRIÇÃO GERAL
+Esta aplicação é uma solução distribuída baseada em micro-serviços, desenvolvida para o gerenciamento produtos, vendas, clientes e relatórios. Foi estruturada utilizando as tecnologias Node.js, MySQL, Docker, e Docker Compose. Buscamos neste trabalho seguir praticas boas para a composição do código e sua estrutura como um todo.
+
+
+#### INICIAR A APLICAÇÃO
+
+Para iniciar a aplicação por gentileza use o comando: docker-compose up --build -d Para construir as imagens corretamente. 
+
+( "--build" Garante que as imagens sejam construídas corretamente)
+
+( "-d" Permite que você continue navegando no terminal mesmo após iniciar a aplicação)
+
+Para encerrar a aplicação por gentileza use o comando: docker-compose down --volumes --remove-orphans Para encerrar e limpar os containers e volumes associados ao código, mantendo a aplicação limpa. 
+
+("--volumes" Apaga os volumes associados ao contêiner) e ("--remove-orphans" Garante a exclusão de containers residuais.)
+
+
+#### COMPORTAMENTO DA APLICAÇÃO NA INICIALIZAÇÃO NO POSTMAN
+
+Após a execução do comando de inicialização da aplicação, pode-se observar que, ao realizar requisições no Postman, a primeira resposta pode levar de 30 a 60 segundos a depender da maquina. Enquanto isso irá mostrar a mensagem de erro: "connect ECONNREFUSED 172.18.0.2:3306". Essa reposta é esperada e então em alguns momentos a aplicação estará 100%.
+
+Esse atraso ocorre devido ao processo de inicialização completa dos serviços e à conexão com o banco de dados. Use volume no docker-compose para criar e iniciar o banco de dados, e também inserir os dados iniciais da maneira que foi orientada para o trabalho com arquivos.sql.
+
+
+Segue testes apropriados para que possam ser feitos no postman.
+
+Os metodos a serem usados são: GET, POST, PUT e DELETE
+
+Primeiro Teste:
+
+Classe: clientes
+
+Método: GET
+
+URL: http://localhost:3000/clientes/listar
+
+Resposta Esperada:
+
+{
+    "message": "Clientes listados com sucesso!",
+    "clientes": [
+        {
+            "id": 1,
+            "nome": "Marcio",
+            "email": "marcio@gmail.com",
+            "telefone": "1111111111",
+            "endereco": "Rua A, 123",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 2,
+            "nome": "Alana Souza",
+            "email": "alana@gmail.com",
+            "telefone": "2222222222",
+            "endereco": "Rua B, 456",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 3,
+            "nome": "Orlando Lima",
+            "email": "orlando@gmail.com",
+            "telefone": "3333333333",
+            "endereco": "Rua C, 789",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 4,
+            "nome": "Ana Clara",
+            "email": "ana@gmail.com",
+            "telefone": "4444444444",
+            "endereco": "Rua D, 101",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 5,
+            "nome": "Pedro Costa",
+            "email": "pedro@gmail.com",
+            "telefone": "5555555555",
+            "endereco": "Rua E, 202",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 6,
+            "nome": "Luiza Martins",
+            "email": "luiza@gmail.com",
+            "telefone": "6666666666",
+            "endereco": "Rua F, 303",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 7,
+            "nome": "Rafael Oliveira",
+            "email": "rafael@gmail.com",
+            "telefone": "7777777777",
+            "endereco": "Rua G, 404",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 8,
+            "nome": "Juliana Pereira",
+            "email": "juliana@gmail.com",
+            "telefone": "8888888888",
+            "endereco": "Rua H, 505",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 9,
+            "nome": "Roberto Ferreira",
+            "email": "roberto@gmail.com",
+            "telefone": "9999999999",
+            "endereco": "Rua I, 606",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        },
+        {
+            "id": 10,
+            "nome": "Fernanda Alves",
+            "email": "fernanda@gmail.com",
+            "telefone": "1010101010",
+            "endereco": "Rua J, 707",
+            "data_criacao": "2024-12-06T04:02:49.000Z"
+        }
+    ]
+}
+
+
+Segundo Teste:
+
+Classe: clientes
+
+Método: POST
+
+URL: http://localhost:3000/clientes/inserir
+
+Inserir no corpo da requisição:
+
+{
+    "nome": "Lucas Pereira",
+    "email": "lucas@email.com",
+    "telefone": "555123456",
+    "endereco": "Avenida C, 789"
+}
+
+
+Resposta Esperada:
+
+{
+    "message": "Cliente criado com sucesso!",
+    "id": 11,
+    "nome": "Lucas Pereira",
+    "email": "lucas@email.com",
+    "telefone": "555123456",
+    "endereco": "Avenida C, 789"
+}
+
+Se o Cliente já tiver cadastrado este e-mail, a resposta será:
+
+{
+    "message": "Já existe um cliente cadastrado com este e-mail."
+}
+
+
+
+Terceiro Teste:
+
+Classe: clientes
+
+Método: GET
+
+URL: http://localhost:3000/clientes/buscar/1
+
+Resposta Esperada:
+
+{
+    "message": "Cliente encontrado com sucesso!",
+    "cliente": {
+        "id": 1,
+        "nome": "Marcio",
+        "email": "marcio@gmail.com",
+        "telefone": "1111111111",
+        "endereco": "Rua A, 123",
+        "data_criacao": "2024-12-06T04:09:49.000Z"
+    }
+}
+
+Caso o Cliente não seja encontrado:
+
+{
+    "message": "Cliente com ID 12 não encontrado."
+}
+
+
+Quarto Teste:
+
+Classe: clientes
+
+Método: PUT
+
+URL: http://localhost:3000/clientes/att/1
+
+Inserir no corpo da requisição:
+
+{
+    "nome": "João Silva",
+    "email": "joaoatualizado@email.com",
+    "telefone": "987654321",
+    "endereco": "Rua A, 321"
+}
+
+
+Resposta Esperada:
+
+{
+    "message": "Cliente com ID 1 atualizado com sucesso!"
+}
+
+Se uma nova busca for feita, responderá:
+
+{
+    "message": "Cliente encontrado com sucesso!",
+    "cliente": {
+        "id": 1,
+        "nome": "João Silva",
+        "email": "joaoatualizado@email.com",
+        "telefone": "987654321",
+        "endereco": "Rua A, 321",
+        "data_criacao": "2024-12-06T04:09:49.000Z"
+    }
+}
+
+
+Quinto Teste:
+
+Classe: clientes
+
+Método: DELETE
+
+URL: http://localhost:3000/clientes/delete/1
+
+Resposta Esperada:
+
+{
+    "message": "Cliente com ID 1 deletado com sucesso!"
+}
+
+Se houver uma buscar por este cliente posterior a exclusão:
+
+{
+    "message": "Cliente com ID 1 não encontrado."
+}
+
+
+Sexto Teste:
+
+Classe: produtos
+
+Método: GET
+
+URL: http://localhost:3000/produtos/listar
+
+Resposta Esperada:
+
+{
+    "message": "Produtos listados com sucesso!",
+    "produtos": [
+        {
+            "id": 1,
+            "nome": "Teclado",
+            "preco": "100.00",
+            "estoque": 50,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 2,
+            "nome": "Mouse",
+            "preco": "50.00",
+            "estoque": 100,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 3,
+            "nome": "Monitor",
+            "preco": "700.00",
+            "estoque": 20,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 4,
+            "nome": "Placa de VÃ­deo",
+            "preco": "1500.00",
+            "estoque": 15,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 5,
+            "nome": "Processador",
+            "preco": "1200.00",
+            "estoque": 10,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 6,
+            "nome": "MemÃ³ria RAM 8GB",
+            "preco": "300.00",
+            "estoque": 2,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 7,
+            "nome": "SSD 512GB",
+            "preco": "400.00",
+            "estoque": 3,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 8,
+            "nome": "Fonte 500W",
+            "preco": "200.00",
+            "estoque": 20,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 9,
+            "nome": "Gabinete",
+            "preco": "250.00",
+            "estoque": 9,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        },
+        {
+            "id": 10,
+            "nome": "Cooler",
+            "preco": "80.00",
+            "estoque": 40,
+            "data_criacao": "2024-12-06T04:20:49.000Z"
+        }
+    ]
+}
+
+Sexto Teste:
+
+Classe: produtos
+
+Método: GET
+
+URL: http://localhost:3000/produtos/inserir
+
+Inserir no corpo da requisição:
+
+{
+    "nome": "Fone de Ouvindo",
+    "preco": 15.00,
+    "estoque": 100
+}
+
+Resposta Esperada:
+
+{
+    "message": "Produto inserido com sucesso!",
+    "id": 11,
+    "nome": "Fone de Ouvindo",
+    "preco": 15,
+    "estoque": 100
+}
+
+Sétimo Teste:
+
+Classe: produtos
+
+Método: GET
+
+URL: http://localhost:3000/produtos/buscar/1
+
+Resposta Esperada:
+
+{
+    "message": "Produto encontrado com sucesso!",
+    "produto": {
+        "id": 1,
+        "nome": "Teclado",
+        "preco": "100.00",
+        "estoque": 50,
+        "data_criacao": "2024-12-06T04:30:07.000Z"
+    }
+}
+
+Oitavo Teste:
+
+Classe: produtos
+
+Método: PUT
+
+http://localhost:3000/produtos/att/1
+
+Inserir no corpo da requisição:
+
+{
+    "nome": "Adaptador USB",
+    "preco": 5.00,
+    "estoque": 60
+}
+
+
+Resposta Esperada:
+
+{
+    "message": "Produto atualizado com sucesso!"
+}
+
+
+Nono Teste:
+
+Classe: produtos
+
+Método: PUT
+
+http://localhost:3000/produtos/att/1
+
+Inserir no corpo da requisição:
+
+{
+    "nome": "Adaptador USB",
+    "preco": 5.00,
+    "estoque": 60
+}
+
+
+Resposta Esperada:
+
+{
+    "message": "Produto atualizado com sucesso!"
+}
+
+Decimo Teste:
+
+Classe: Produtos
+
+Método: DELETE
+
+URL: http://localhost:3000/produtos/delete/1
+
+Resposta Esperada:
+
+{
+    "message": "Produto deletado com sucesso!"
+}
+
+Decimo Primeiro Teste: 
+
+Classe: Vendas
+
+Método: GET
+
+URL: http://localhost:3000/vendas/listar
+
+
+Resposta Esperada:
+{
+    "message": "Pedidos listados com sucesso!",
+    "pedidos": [
+        {
+            "id": 1,
+            "cliente": {
+                "id": 1,
+                "nome": "Marcio"
+            },
+            "itens": [
+                {
+                    "produto_id": 1,
+                    "produto_nome": "Teclado",
+                    "quantidade": 2,
+                    "preco_unitario": "100.00",
+                    "total_item": "200.00"
+                },
+                {
+                    "produto_id": 2,
+                    "produto_nome": "Mouse",
+                    "quantidade": 1,
+                    "preco_unitario": "50.00",
+                    "total_item": "50.00"
+                }
+            ],
+            "total": 250,
+            "status": "pendente"
+        },
+        {
+            "id": 4,
+            "cliente": {
+                "id": 1,
+                "nome": "Marcio"
+            },
+            "itens": [
+                {
+                    "produto_id": 1,
+                    "produto_nome": "Teclado",
+                    "quantidade": 2,
+                    "preco_unitario": "100.00",
+                    "total_item": "200.00"
+                },
+                {
+                    "produto_id": 2,
+                    "produto_nome": "Mouse",
+                    "quantidade": 1,
+                    "preco_unitario": "50.00",
+                    "total_item": "50.00"
+                }
+            ],
+            "total": 250,
+            "status": "pendente"
+        },
+        {
+            "id": 5,
+            "cliente": {
+                "id": 1,
+                "nome": "Marcio"
+            },
+            "itens": [
+                {
+                    "produto_id": 1,
+                    "produto_nome": "Teclado",
+                    "quantidade": 2,
+                    "preco_unitario": "100.00",
+                    "total_item": "200.00"
+                },
+                {
+                    "produto_id": 2,
+                    "produto_nome": "Mouse",
+                    "quantidade": 1,
+                    "preco_unitario": "50.00",
+                    "total_item": "50.00"
+                }
+            ],
+            "total": 250,
+            "status": "pendente"
+        },
+        {
+            "id": 2,
+            "cliente": {
+                "id": 2,
+                "nome": "Alana Souza"
+            },
+            "itens": [
+                {
+                    "produto_id": 3,
+                    "produto_nome": "Monitor",
+                    "quantidade": 5,
+                    "preco_unitario": "700.00",
+                    "total_item": "3500.00"
+                },
+                {
+                    "produto_id": 6,
+                    "produto_nome": "MemÃ³ria RAM 8GB",
+                    "quantidade": 3,
+                    "preco_unitario": "300.00",
+                    "total_item": "900.00"
+                }
+            ],
+            "total": 4400,
+            "status": "finalizado"
+        },
+        {
+            "id": 3,
+            "cliente": {
+                "id": 3,
+                "nome": "Orlando Lima"
+            },
+            "itens": [
+                {
+                    "produto_id": 7,
+                    "produto_nome": "SSD 512GB",
+                    "quantidade": 2,
+                    "preco_unitario": "400.00",
+                    "total_item": "800.00"
+                },
+                {
+                    "produto_id": 8,
+                    "produto_nome": "Fonte 500W",
+                    "quantidade": 4,
+                    "preco_unitario": "200.00",
+                    "total_item": "800.00"
+                }
+            ],
+            "total": 1600,
+            "status": "cancelado"
+        }
+    ]
+}
+
+Decimo Segundo Teste: 
+
+Classe: Vendas
+
+Método: POST
+
+URL: http://localhost:3000/vendas/inserir
+
+Inserir no corpo da requisição:
+
+{
+  "cliente_id": 1,
+  "itens": [
+    {
+      "produto_id": 1,
+      "quantidade": 2
+    },
+    {
+      "produto_id": 2,
+      "quantidade": 1
+    }
+  ]
+}
+
+Resposta Esperada:
+
+{
+    "message": "Pedido criado com sucesso!",
+    "pedidoId": 5
+}
+
+Decimo Terceiro Teste: 
+
+Classe: Vendas
+
+Método: GET
+
+URL: http://localhost:3000/vendas/buscar/1
+
+Reposta Esperada:
+
+{
+    "pedido": {
+        "id": 1,
+        "cliente_id": 1,
+        "status": "pendente",
+        "data_pedido": "2024-12-01T10:00:00.000Z"
+    },
+    "cliente": {
+        "id": 1,
+        "nome": "Marcio",
+        "email": "marcio@gmail.com",
+        "telefone": "1111111111",
+        "endereco": "Rua A, 123",
+        "data_criacao": "2024-12-06T06:48:52.000Z"
+    },
+    "itens": [
+        {
+            "produto_id": 1,
+            "produto_nome": "Teclado",
+            "quantidade": 2,
+            "preco_unitario": "100.00"
+        },
+        {
+            "produto_id": 2,
+            "produto_nome": "Mouse",
+            "quantidade": 1,
+            "preco_unitario": "50.00"
+        }
+    ]
+}
+
+Decimo Quarto Teste: 
+
+Classe: Vendas
+
+Método: PUT
+
+URL: http://localhost:3000/vendas/att/1
+
+Inserir no corpo da requisição:
+{
+  "itens": [
+    {
+      "produto_id": 1,
+      "quantidade": 3
+    },
+    {
+      "produto_id": 3,
+      "quantidade": 2
+    }
+  ]
+}
+
+Resposta Esperada:
+
+{
+    "message": "Pedido atualizado com sucesso!",
+    "pedido": {
+        "id": "1",
+        "cliente": {
+            "id": 1,
+            "nome": "Marcio"
+        },
+        "itens": [
+            {
+                "produto_id": 1,
+                "produto_nome": "Teclado",
+                "quantidade": 3,
+                "preco_unitario": "100.00"
+            },
+            {
+                "produto_id": 3,
+                "produto_nome": "Monitor",
+                "quantidade": 2,
+                "preco_unitario": "700.00"
+            }
+        ],
+        "total": 1700
+    }
+}
+
+Decimo Quinto Teste: 
+
+Classe: Vendas
+
+Método: PUT
+
+URL: http://localhost:3000/vendas/concluir/1
+
+Resposta esperada:
+
+{
+  "message": "Venda concluída com sucesso!"
+}
+
+Decimo Sexto Teste: 
+
+Classe: Vendas
+
+Método: DELETE
+
+URL: http://localhost:3000/cancelar/1
+
+Resposta esperada:
+
+{
+    "message": "Pedido cancelado com sucesso!"
+}
+
+Decimo Sétimo Teste: 
+
+Classe: Vendedores
+
+Método: GET
+
+URL: http://localhost:3000/vendedores/listar
+
+Resposta esperada:
+
+{
+    "message": "Vendedores listados com sucesso!",
+    "vendedores": [
+        {
+            "id": 1,
+            "nome": "Jota",
+            "email": "jota@email.com",
+            "salario": "2500.00"
+        },
+        {
+            "id": 2,
+            "nome": "Maria",
+            "email": "maria@email.com",
+            "salario": "3000.00"
+        }
+    ]
+}
+
+Decimo Oitavo Teste: 
+
+Classe: Vendedores
+
+Método: POST
+
+URL: http://localhost:3000/vendedores/inserir
+
+Inserir no corpo da requisição:
+
+{
+  "nome": "Carlos Pereira",
+  "email": "carlos.pereira@example.com",
+  "salario": 4000
+}
+
+Resposta Esperada:
+{
+    "message": "Vendedor foi adicionado com sucesso ao sistema.",
+    "vendedor": {
+        "id": 3,
+        "nome": "Carlos Pereira",
+        "email": "carlos.pereira@example.com",
+        "salario": 4000
+    }
+}
+
+Decimo Nono Teste: 
+
+Classe: Vendedores
+
+Método: GET
+
+URL: http://localhost:3000/vendedores/buscar/1
+
+Resposta Esperada:
+
+{
+  "message": "Vendedor encontrado com sucesso!",
+  "vendedor": {
+    "id": 1,
+    "nome": "Jota Silva",
+    "email": "jota.silva@example.com",
+    "salario": 3000
+  }
+}
+
+
+Decimo Nono Teste: 
+
+Classe: Vendedores
+
+Método: GET
+
+URL: http://localhost:3000/vendedores/buscar/1
+
+Resposta Esperada:
+
+{
+    "message": "Vendedor encontrado com sucesso!",
+    "vendedor": {
+        "id": 1,
+        "nome": "Jota",
+        "email": "jota@email.com",
+        "salario": "2500.00"
+    }
+}
+
+Vigésimo Teste: 
+
+Classe: Vendedores
+
+Método: PUT
+
+URL: http://localhost:3000/vendedores/att/1
+
+Inserir no corpo da requisição:
+
+{
+  "nome": "João Silva",
+  "email": "joao@sh1.com",
+  "salario": 3200
+}
+
+Resposta Esperada:
+
+{
+    "message": "Vendedor atualizado com sucesso!",
+    "id": "1",
+    "nome": "João Silva",
+    "email": "joao@sh1.com",
+    "salario": 3200
+}
+
+Vigésimo Primeiro Teste: 
+
+Classe: Vendedores
+
+Método: DELETE
+
+URL: http://localhost:3000/vendedores/delete/1
+
+Resposta Esperada:
+
+
